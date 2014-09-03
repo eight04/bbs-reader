@@ -6,6 +6,7 @@
     line-height: 18px;
 	color: silver;
 	cursor: default;
+	white-space: nowrap;
 }
 
 .bbs-container img{
