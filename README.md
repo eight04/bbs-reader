@@ -1,7 +1,13 @@
-Bunch of JavaScript
-===================
-Feel free to use them.
+BBS Reader
+==========
+A simple service that translate ansi colored text into html.
 
-Todos
+Demo
+----
+Check the demo [here](https://rawgit.com/eight04/bbs-reader/master/bbs-reader.html).
+
+Usage
 -----
-* [Linkify Plus Plus] Complete the top-level domain list.
+```Javascript
+element.innerHTML = bbsReader(ansiString);
+```
