@@ -1,3 +1,4 @@
+/* eslint eqeqeq: 0, quotes: 0, no-unused-vars: [2, "local"] */
 
 var bbsReader = function(){
 	"use strict";
@@ -60,7 +61,7 @@ var bbsReader = function(){
 				bg: 40
 			};
 			
-		while(m = RE.exec(lineText)){
+		while ((m = RE.exec(lineText))) {
 			colorState = apply(colorState, m[1]);
 			text += quote(lineText.substring(p, m.index));
 			text += '</span><span class="' + className(colorState) + '">';
