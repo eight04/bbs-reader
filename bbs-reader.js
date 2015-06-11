@@ -8,7 +8,7 @@ var bbsReader = function(){
 		"<": "&lt;",
 		">": "&gt;"
 	};
-	
+
 	var quote = function(text){
 		var key;
 		for(key in quoteData){
@@ -20,7 +20,7 @@ var bbsReader = function(){
 	var className = function(c){
 		return "c" + c.fg + c.light + " b" + c.bg;
 	};
-	
+
 	var extract = function(c){
 		var i, ct = {light: null, fg: null, bg: null};
 		c = c.split(";");
@@ -49,18 +49,18 @@ var bbsReader = function(){
 		}
 		return state;
 	};
-	
+
 	var parseLine = function(lineText){
-		var m = null, 
-			p = 0, 
-			text = "<span>", 
-			RE = /\x1B\[([\d\;]*?)m/g, 
+		var m = null,
+			p = 0,
+			text = "<span>",
+			RE = /\x1B\[([\d\;]*?)m/g,
 			colorState = {
 				light: 0,
 				fg: 37,
 				bg: 40
 			};
-			
+
 		while ((m = RE.exec(lineText))) {
 			colorState = apply(colorState, m[1]);
 			text += quote(lineText.substring(p, m.index));
@@ -70,7 +70,7 @@ var bbsReader = function(){
 		text += quote(lineText.substring(p)) + "</span>";
 		return text;
 	};
-	
+
 	var init = function(source){
 		source = source.replace(/ /g, "\u00A0");
 		source = source.replace(/\?\[[\d\;]*?m/g, "_"); //掉字
@@ -81,6 +81,6 @@ var bbsReader = function(){
 		}
 		return lines.join("");
 	};
-	
+
 	return init;
 }();
