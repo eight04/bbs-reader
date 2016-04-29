@@ -1,0 +1,24 @@
+{
+  "name": "bbs-reader",
+  "version": "0.0.0",
+  "description": "Convert ANSI string into HTML.",
+  "main": "bbs-reader.js",
+  "author": "eight04 <eight04@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "convert",
+    "telnet",
+    "ansi",
+    "converter"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eight04/bbs-reader.git"
+  },
+  "homepage": "https://github.com/eight04/bbs-reader#readme",
+  "scripts": {
+    "test": "eslint *.js && node test.js",
+    "preversion": "npm test",
+    "postversion": "git push --follow-tags && npm publish"
+  }
+}
