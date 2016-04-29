@@ -78,7 +78,7 @@ function makeHead(lLabel, lText, rLabel, rText) {
     result += makeSpan({f:4,b:7,text:" "+lLabel+" "}) + makeSpan({f:7,b:4,text:" "+lText+" ".repeat(fillSpace)});
     
     if (rText) {
-        result += makeSpan({f:4,b:4,text:" "+rLabel+" "}) + makeSpan({f:7,b:4,text:" "+rText+" "});
+        result += makeSpan({f:4,b:7,text:" "+rLabel+" "}) + makeSpan({f:7,b:4,text:" "+rText+" "});
     }
     
     result += "</div>";
