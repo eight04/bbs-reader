@@ -31,105 +31,6 @@ function splitLabel(text) {
     return [text, label, right];
 }
 
-// create span tag with color
-function makeSpan(span) {
-    if (!span.text) {
-        return "";
-    }
-    var cls = "f" + span.f + " b" + span.b,
-        w = span.text.length;
-        
-    if (span.l) {
-        cls += " l";
-    }
-    if (span.flash) {
-        cls += " flash";
-    }
-    if (span.halfStart) {
-        cls += " half-start";
-        w--;
-    }
-    if (span.halfEnd) {
-        cls += " half-end";
-        w--;
-    }
-    cls += " w" + w;
-    return "<span class='" + cls + "'>" + escape(span.text) + "</span>";
-}
-
-// create head line
-function makeHead(lLabel, lText, rLabel, rText) {
-    if (!lText) {
-        return "";
-    }
-    
-    var fillSpace = 78, result = "<div class='line'>";
-    
-    fillSpace -= 2 + lLabel.length + 1 + lText.length;
-    
-    if (rText) {
-        fillSpace -= 2 + rLabel.length + 2 + rText.length;
-    }
-    
-    if (fillSpace < 0) {
-        fillSpace = 0;
-    }
-    
-    result += makeSpan({f:4,b:7,text:" "+lLabel+" "}) + makeSpan({f:7,b:4,text:" "+lText+" ".repeat(fillSpace)});
-    
-    if (rText) {
-        result += makeSpan({f:4,b:7,text:" "+rLabel+" "}) + makeSpan({f:7,b:4,text:" "+rText+" "});
-    }
-    
-    result += "</div>";
-    
-    return result;
-}
-
-// extract text to color
-function extractColor(text, i, color) {
-    var re = /\033\[([\d;]*)m/g;
-    re.lastIndex = i;
-    var match = re.exec(text);
-    if (!match || match.index != i) {
-        return null;
-    }
-    var span = {
-        l: color.l,
-        f: color.f,
-        b: color.b,
-        flash: color.flash,
-        text: "",
-        halfStart: false,
-        halfEnd: false,
-        i: re.lastIndex
-    };
-    var tokens = match[1].split(";");
-    var code;
-    for (i = 0; i < tokens.length; i++) {
-        code = +tokens[i];
-        if (code == 0) {
-            span.l = 0;
-            span.f = 7;
-            span.b = 0;
-            span.flash = false;
-        } else if (code == 1) {
-            span.l = 1;
-        } else if (code == 5) {
-            span.flash = true;
-        } else if (code == 7) {
-            var t = span.f;
-            span.f = span.b;
-            span.b = t;
-        } else if (code < 40) {
-            span.f = code - 30;
-        } else if (code < 50) {
-            span.b = code - 40;
-        }
-    }
-    return span;
-}
-
 var escapeTable = {
     "<": "&lt",
     "&": "&amp;"
@@ -153,6 +54,144 @@ function escape(s) {
     }
     
     return s2;
+}
+
+function Span(f, b, l) {
+    this.f = f;
+    this.b = b;
+    this.l = l;
+    this.flash = false;
+    this.halfStart = false;
+    this.halfEnd = false;
+    this.text = "";
+    this.i = 0;
+}
+
+Span.prototype.toString = function() {
+    if (!this.text) {
+        return "";
+    }
+    
+    var cls = "f" + this.f + " b" + this.b,
+        w = this.text.length;
+        
+    if (this.l) {
+        cls += " l";
+    }
+    if (this.flash) {
+        cls += " flash";
+    }
+    if (this.halfStart) {
+        cls += " half-start";
+        w--;
+    }
+    if (this.halfEnd) {
+        cls += " half-end";
+        w--;
+    }
+    cls += " w" + w;
+    return "<span class='" + cls + "'>" + escape(this.text) + "</span>";
+};
+
+Span.prototype.copy = function() {
+    var span = new Span(this.f, this.b, this.l);
+    span.flash = this.flash;
+    return span;
+};
+
+Span.prototype.reset = function() {
+    this.f = 7;
+    this.b = 0;
+    this.l = false;
+    this.flash = false;
+}
+
+// create head line
+function makeHead(lLabel, lText, rLabel, rText) {
+    if (!lText) {
+        return "";
+    }
+    
+    var fillSpace = 78, result = "<div class='line'>";
+    
+    fillSpace -= 2 + lLabel.length + 1 + lText.length;
+    
+    if (rText) {
+        fillSpace -= 2 + rLabel.length + 2 + rText.length;
+    }
+    
+    if (fillSpace < 0) {
+        fillSpace = 0;
+    }
+    
+    var span = new Span(4, 7, false);
+    
+    span.text = " " + lLabel + " ";
+    
+    result += span.toString();
+    
+    span.f = 7;
+    span.b = 4;
+    span.text = " " + lText + " ".repeat(fillSpace);
+    
+    result += span.toString();
+    
+    // result += makeSpan({f:4,b:7,text:" "+lLabel+" "}) + makeSpan({f:7,b:4,text:" "+lText+" ".repeat(fillSpace)});
+    
+    if (rText) {
+        span.f = 4;
+        span.b = 7;
+        span.text = " " + rLabel + " ";
+        
+        result += span.toString();
+        
+        span.f = 7;
+        span.b = 4;
+        span.text = " " + rText + " ";
+        
+        result += span.toString();
+        // result += makeSpan({f:4,b:7,text:" "+rLabel+" "}) + makeSpan({f:7,b:4,text:" "+rText+" "});
+    }
+    
+    result += "</div>";
+    
+    return result;
+}
+
+// extract text to color
+function extractColor(text, i, color) {
+    var re = /\033\[([\d;]*)m/g;
+    re.lastIndex = i;
+    var match = re.exec(text);
+    if (!match || match.index != i) {
+        return null;
+    }
+    
+    var span = color.copy();
+    span.i = re.lastIndex;
+    
+    var tokens = match[1].split(";");
+    var code;
+    
+    for (i = 0; i < tokens.length; i++) {
+        code = +tokens[i];
+        if (code == 0) {
+            span.reset();
+        } else if (code == 1) {
+            span.l = true;
+        } else if (code == 5) {
+            span.flash = true;
+        } else if (code == 7) {
+            var t = span.f;
+            span.f = span.b;
+            span.b = t;
+        } else if (code < 40) {
+            span.f = code - 30;
+        } else if (code < 50) {
+            span.b = code - 40;
+        }
+    }
+    return span;
 }
 
 // convert ansi string into html    
@@ -186,15 +225,8 @@ function bbsReader(data) {
         i += match[0].length;
     }
     
-    var span = {
-        l: 0,
-        f: 7,
-        b: 0,
-        flash: false,
-        text: "",
-        halfStart: false,
-        halfEnd: false
-    }, pos = 0, cleanLine = false, cjk = false;
+    var span = new Span(7, 0, false),
+        pos = 0, cleanLine = false, cjk = false;
     
     result += "<div class='line'>";
     
@@ -205,15 +237,13 @@ function bbsReader(data) {
             if (ch == "\xa1\xb0") {
                 // ※
                 cleanLine = true;
+                span.reset();
                 span.f = 2;
-                span.b = 0;
-                span.l = 0;
             } else if (ch == ": ") {
                 // : 
                 cleanLine = true;
+                span.reset();
                 span.f = 6;
-                span.b = 0;
-                span.l = 0;
             }
         }
         if (data[i] == "\x1b") {
@@ -226,7 +256,7 @@ function bbsReader(data) {
                 span.text += data[span2.i];
                 span.halfEnd = true;
                 
-                result += makeSpan(span);
+                result += span.toString();
                 
                 span2.text += span.text.substring(span.text.length - 2);
                 span2.halfStart = true;
@@ -237,24 +267,21 @@ function bbsReader(data) {
                 cjk = false;
             } else {
                 cjk = false;
-                result += makeSpan(span);
+                result += span.toString();
                 i = span2.i - 1;
                 span = span2;
             }
         } else if (data[i] == "\r") {
             continue;
         } else if (data[i] == "\n") {
-            result += makeSpan(span) + "</div><div class='line'>";
+            result += span.toString() + "</div><div class='line'>";
             span.text = "";
             span.halfStart = false;
             span.halfEnd = false;
             cjk = false;
             
             if (cleanLine) {
-                span.f = 7;
-                span.b = 0;
-                span.l = 0;
-                span.flash = false;
+                span.reset();
                 cleanLine = false;
             }
             
@@ -270,7 +297,7 @@ function bbsReader(data) {
         }
     }
     
-    result += makeSpan(span) + "</div>";
+    result += span.toString() + "</div>";
     
     return {
         html: result,
