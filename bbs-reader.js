@@ -222,7 +222,7 @@ function bbsReader(data) {
             if (!span2) {
                 span.text += data[i];
                 pos++;
-            } else if (cjk) {
+            } else if (cjk && data[span2.i] != "\n") {
                 span.text += data[span2.i];
                 span.halfEnd = true;
                 
@@ -236,6 +236,7 @@ function bbsReader(data) {
                 span = span2;
                 cjk = false;
             } else {
+                cjk = false;
                 result += makeSpan(span);
                 i = span2.i - 1;
                 span = span2;
