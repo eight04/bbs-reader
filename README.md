@@ -31,6 +31,10 @@ Note that bbsReader dosn't decode big5-uao.
 Changelog
 ---------
 
+* 0.1.1 (Apr 30, 2016)
+
+	- Fix a bug that `.flash` isn't reset with cleanLine.
+
 * 0.1.0 (Apr 30, 2016)
 
 	- First release.
