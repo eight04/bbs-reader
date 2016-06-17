@@ -7,7 +7,7 @@ fs.readFile("example.ans", "binary", function(err, data) {
 		throw err;
 	}
 	data = bbsReader(data);
-	data = "<html><head><meta charset='utf-8'><link rel='stylesheet' href='../bbs-reader.css'></head><body>" + data.html + "</body></html>"
+	data = "<html><head><meta charset='utf-8'><link rel='stylesheet' href='../bbs-reader.css'></head><body class='bbs'>" + data.html + "</body></html>"
 	data = uao.decode(data);
 	fs.writeFile("example.html", data, "utf-8");
 });
