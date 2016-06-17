@@ -31,6 +31,10 @@ Note that bbsReader dosn't decode big5-uao.
 Changelog
 ---------
 
+* 0.2.1 (Jun 18, 2016)
+
+	- `opacity` -> `color: transparent`.
+
 * 0.2.0 (Jun 18, 2016)
 
 	- Add flash animation.
