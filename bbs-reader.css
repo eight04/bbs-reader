@@ -10,6 +10,22 @@ a:visited {
 	color: inherit;
 }
 
+.flash {
+	animation: 2s step-end infinite bbs-flash
+}
+
+@keyframes bbs-flash {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
 .bbs {
 	display: table;
 	margin-left: auto;
