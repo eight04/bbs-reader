@@ -31,6 +31,14 @@ Note that bbsReader dosn't decode big5-uao.
 Changelog
 ---------
 
+* 0.2.0 (Jun 18, 2016)
+
+	- Add flash animation.
+
+* 0.1.2 (Jun 18, 2016)
+
+	- Remove line width limit.
+
 * 0.1.1 (Apr 30, 2016)
 
 	- Fix a bug that `.flash` isn't reset with cleanLine.
