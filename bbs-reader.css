@@ -10,16 +10,20 @@ a:visited {
 	color: inherit;
 }
 
+.bbs {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .line {
-	width: 40em;
 	min-height: 1em;
-	margin: 0 auto;
+	white-space: pre;
 }
 
 .line span {
 	display: inline-block;
 	vertical-align: middle;
-	white-space: pre;
 }
 
 .half-start,
