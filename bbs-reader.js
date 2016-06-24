@@ -162,10 +162,25 @@ function makeHead(lLabel, lText, rLabel, rText) {
 function extractColor(text, i, color) {
     var re = /\033\[([\d;]*)m/g;
     re.lastIndex = i;
-    var match = re.exec(text);
-    if (!match || match.index != i) {
+    var matches = [],
+        match;
+    do {
+        match = re.exec(text);
+        if (!match || match.index != i) {
+            break;
+        }
+        matches.push(match);
+        i = re.lastIndex;
+    } while (text[re.lastIndex] == "\x1b");
+    
+    if (!matches.length) {
         return null;
     }
+    
+    var tokens = matches.map(function(match){
+        return match[1].split(";");
+    });
+    tokens = Array.prototype.concat.call([], tokens);
     
     var span = color.copy();
     span.i = re.lastIndex;
