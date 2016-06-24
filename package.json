@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/eight04/bbs-reader#readme",
   "scripts": {
-    "test": "eslint *.js",
+    "test": "eslint *.js && node test/test.js",
     "preversion": "npm test",
     "postversion": "git push --follow-tags && npm publish"
   }
