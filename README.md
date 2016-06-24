@@ -31,6 +31,10 @@ Note that bbsReader dosn't decode big5-uao.
 Changelog
 ---------
 
+* 0.2.2 (Jun 24, 2016)
+
+	- Fix a bug within consequent escape code.
+
 * 0.2.1 (Jun 18, 2016)
 
 	- `opacity` -> `color: transparent`.
