@@ -32,28 +32,18 @@ function splitLabel(text) {
 }
 
 var escapeTable = {
-    "<": "&lt",
+    "<": "&lt;",
     "&": "&amp;"
 };
 
+function escapeRepl(match) {
+    return escapeTable[match];
+}
+
 // escape character to html entity
 function escape(s) {
-    var s2 = "", i;
-    
-    for (i = 0; i < s.length; i++) {
-        if (s.charCodeAt(i) & 0x80) {
-            // ignore cjk
-            s2 += s.substr(i, 2);
-            i++;
-            continue;
-        } else if (escapeTable[s[i]]) {
-            s2 += escapeTable[s[i]];
-        } else {
-            s2 += s[i];
-        }
-    }
-    
-    return s2;
+    // this should be safe since there is no CJK contains "&", "<"
+    return s.replace(/<|&/g, escapeRepl);
 }
 
 function Span(f, b, l) {
@@ -185,7 +175,6 @@ function extractColor(text, i, color) {
     var span = color.copy();
     span.i = re.lastIndex;
     
-    var tokens = match[1].split(";");
     var code;
     
     for (i = 0; i < tokens.length; i++) {
