@@ -31,6 +31,11 @@ Note that bbsReader dosn't decode big5-uao.
 Changelog
 ---------
 
+* 0.2.3 (Jul 19, 2016)
+
+	- Fix escape table bug.
+	- Fix consequent escape code bug.
+
 * 0.2.2 (Jun 24, 2016)
 
 	- Fix a bug within consequent escape code.
