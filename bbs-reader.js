@@ -170,7 +170,8 @@ function extractColor(text, i, color) {
     var tokens = matches.map(function(match){
         return match[1].split(";");
     });
-    tokens = Array.prototype.concat.call([], tokens);
+    
+    tokens = Array.prototype.concat.apply([], tokens);
     
     var span = color.copy();
     span.i = re.lastIndex;
