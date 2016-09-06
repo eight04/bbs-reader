@@ -31,6 +31,10 @@ Note that bbsReader dosn't decode big5-uao.
 Changelog
 ---------
 
+* 0.2.4 (Sep 6, 2016)
+
+	- Replace wXX class with inner style. Fix w > 80 issue.
+
 * 0.2.3 (Jul 19, 2016)
 
 	- Fix escape table bug.
