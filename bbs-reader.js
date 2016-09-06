@@ -79,8 +79,7 @@ Span.prototype.toString = function() {
         cls += " half-end";
         w--;
     }
-    cls += " w" + w;
-    return "<span class='" + cls + "'>" + escape(this.text) + "</span>";
+    return "<span class='" + cls + "' style='width:" + (w / 2) + "em'>" + escape(this.text) + "</span>";
 };
 
 Span.prototype.copy = function() {
