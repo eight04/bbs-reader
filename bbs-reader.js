@@ -275,9 +275,9 @@ function bbsReader(data) {
                 i = span2.i - 1;
                 span = span2;
             }
-        } else if (data[i] == "\r") {
+        } else if (data[i] == "\r" && data[i + 1] == "\n") {
             continue;
-        } else if (data[i] == "\n") {
+        } else if (data[i] == "\r" || data[i] == "\n") {
             result += span.toString() + "</div><div class='line'>";
             span.text = "";
             span.halfStart = false;
