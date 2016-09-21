@@ -31,6 +31,12 @@ Note that bbsReader dosn't decode big5-uao.
 Changelog
 ---------
 
+* 0.3.0 (Sep 21, 2016)
+
+	- Add more fonts to font list.
+	- Add `min-width:40em` to bbs screen.
+	- Consider single "\r" character as line feed.
+
 * 0.2.4 (Sep 6, 2016)
 
 	- Replace wXX class with inner style. Fix w > 80 issue.
