@@ -31,6 +31,12 @@ Note that bbsReader dosn't decode big5-uao.
 Changelog
 ---------
 
+* 0.3.1 (Feb 21, 2017)
+
+	- Update uao-js to 1.0.1.
+	- Fix infinite loop bug with unknown ansi escape code.
+	- Fix: the gap between lines in non-quirks mode.
+
 * 0.3.0 (Sep 21, 2016)
 
 	- Add more fonts to font list.
