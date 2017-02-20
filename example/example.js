@@ -2,12 +2,8 @@ var fs = require("fs"),
 	bbsReader = require("../bbs-reader"),
 	uao = require("uao-js");
 	
-fs.readFile("example.ans", "binary", function(err, data) {
-	if (err) {
-		throw err;
-	}
-	data = bbsReader(data);
-	data = "<html><head><meta charset='utf-8'><link rel='stylesheet' href='../bbs-reader.css'></head><body class='bbs'>" + data.html + "</body></html>"
-	data = uao.decode(data);
-	fs.writeFile("example.html", data, "utf-8");
-});
+var data = fs.readFileSync("example.ans", "binary"),
+	result = bbsReader(data),
+	html =`<html><head><meta charset='utf-8'><link rel='stylesheet' href='../bbs-reader.css'></head><body class='bbs'>${result.html}</body></html>`;
+
+fs.writeFileSync("example.html", uao.decodeSync(html), "utf-8");

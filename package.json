@@ -20,5 +20,8 @@
     "test": "eslint *.js && node test/test.js",
     "preversion": "npm test",
     "postversion": "git push --follow-tags && npm publish"
+  },
+  "devDependencies": {
+    "uao-js": "^1.0.1"
   }
 }
